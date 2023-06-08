@@ -1,5 +1,5 @@
 import os
-
+import psycopg2
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -14,6 +14,7 @@ admins = [
 ip = os.getenv('ip')
 PGUSER = str(os.getenv('PGUSER'))
 PGPASSWORD = str(os.getenv('PGPASSWORD'))
-DATEBESE = str(os.getenv('DATEBESE'))
+DATEBESE = str(os.getenv('DATABASE'))
 
-POSTGRES_URI = f'postgresql://{PGUSER}:{PGPASSWORD}@{ip}/{DATEBESE}'
+
+connection = f'postgresql://{PGUSER}:{PGPASSWORD}@{ip}/{DATEBESE}'
