@@ -1,5 +1,18 @@
 async def on_startup(dp):
 
+    from loader import db
+    from utils.db_api.db_gino import on_startup
+    print('Подключение к Postgre')
+    await on_startup(dp)
+
+    print('Удаление базы данных')
+    await db.gino.drop_all()
+
+    print('Создание таблиц')
+    await db.gino.create_all()
+    print("Готова")
+
+
     from utils.notify_admins import on_startup_notify
     await on_startup_notify(dp)
 

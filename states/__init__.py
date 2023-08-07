@@ -1,1 +1,1 @@
-from .test import register
+from .fillAd import fill_ad

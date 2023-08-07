@@ -1,33 +1,41 @@
 from aiogram import types
-from aiogram.dispatcher import FSMContext
-from aiogram.dispatcher.filters import Command
-
 from loader import dp
 
-from states import register
+from utils.db_api import quick_commands as commands
 
-@dp.message_handler(Command('register')) # /register
-async def register_(message: types.Message):
-    await message.answer('Привет ты начал регистрацию,\nВведи своё имя')
-    await register.test1.set()
 
-@dp.message_handler(state=register.test1)
-async def state1(message: types.Message, state: FSMContext):
-    answer = message.text
+@dp.message_handler(text='/register')
+async def command_register(message: types.Message):
+    try:
+        user = await commands.select_user(message.from_user.id)
+        if user.status == 'active':
+            await message.answer(f'Привет {user.first_name}\n'
+                                 f'ты уже зареган')
+        elif user.status == 'bamed':
+            await message.answer('Ты забанен')
+    except Exception:
+        await commands.add_user(user_id=message.from_user.id,
+                                first_name=message.from_user.first_name,
+                                last_name=message.from_user.last_name,
+                                username=message.from_user.username,
+                                status='active')
+        await message.answer('Ты успешно зарегестрирован')
 
-    await state.update_data(tast1=answer)
-    await message.answer(f'{answer} Сколко тебе лет?')
-    await register.test2.set()
+@dp.message_handler(text='/ban')
+async def get_ban(message: types.Message):
+    await commands.update_status('ban')
+    await message.answer('We baned you')
 
-@dp.message_handler(state=register.test2)
-async def state1(message: types.Message, state: FSMContext):
-    answer = message.text
+@dp.message_handler(text='/unban')
+async def get_unban(message: types.Message):
+    await commands.update_status('active')
+    await message.answer('We unbaned you')
 
-    await state.update_data(tast2=answer)
-    data = await state.get_data()
-    name = data.get('test1')
-    age = data.get('test2')
-    await message.answer(f'Регистрация успешно завершена\n'
-                         f'твоё имя {name}\n'
-                         f'Тебе {age} лет')
-    await state.finish()
+@dp.message_handler(text='/profile')
+async def get_unban(message: types.Message):
+    user = await commands.select_user(message.from_user.id)
+    await message.answer(f'Id - {user.first_name}'
+                         f'first_name - {user.first_name}'
+                         f'last_name - {user.last_name}'
+                         f'username - {user.username}'
+                         f'status - {user.status}')

@@ -1,7 +1,12 @@
 from aiogram import types
 from loader import dp
+from loader import bot
 
-@dp.message_handler(text='/help')
+ch_id = '-1001775529848'
+@dp.message_handler(commands=['help'])
 async def command_start(message: types.Message):
-    await message.answer(f'hello {message.from_user.full_name}! \n'
-                         f'your id: {message.from_user.id}')
+    text = "new_news"
+    await bot.send_message(message.from_user.id, message.chat.id)
+
+
+

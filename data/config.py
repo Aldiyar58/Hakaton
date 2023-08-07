@@ -14,7 +14,7 @@ admins = [
 ip = os.getenv('ip')
 PGUSER = str(os.getenv('PGUSER'))
 PGPASSWORD = str(os.getenv('PGPASSWORD'))
-DATEBESE = str(os.getenv('DATABASE'))
+DATEBASE = str(os.getenv('DATABASE'))
 
 
-connection = f'postgresql://{PGUSER}:{PGPASSWORD}@{ip}/{DATEBESE}'
+POSTGRES_URI = f'postgresql://{PGUSER}:{PGPASSWORD}@{ip}/{DATEBASE}'
