@@ -6,6 +6,7 @@ async def set_default_commands(dp):
         types.BotCommand('help', 'Помощь'),
         types.BotCommand('menu', 'Text'),
         types.BotCommand('profilfe', 'Получить данные с БД'),
-        types.BotCommand('register', 'Text')
+        types.BotCommand('register', 'Text'),
+        types.BotCommand('push_announcement', 'Отправит объявление')
 
     ])

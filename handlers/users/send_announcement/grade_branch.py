@@ -3,7 +3,7 @@ from aiogram import types
 from keyboard.inline import ikb_info_type, ikb_students, ikb_grade_list, ikb_7_grade_list, ikb_8_grade_list, ikb_9_grade_list, ikb_10_grade_list, ikb_11_grade_list, ikb_12_grade_list, ikb_push_announcement
 from .fill_push_announcement import chat_id
 
-@dp.message_handler(commands=['Отправит_обявление'])
+@dp.message_handler(commands=['push_announcement'])
 async def command_start(message: types.Message):
     await message.answer(f"hi chose where we send news \n"
                          f"text text text text text\n"
