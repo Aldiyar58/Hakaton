@@ -7,13 +7,17 @@ from loader import dp
 
 from states import fill_Ad_Event
 
-chat_id = []
+from .configF import chat_id
+
+from utils.db_api import quick_commands as commands
+
+#fill Ad Event____________________________________________________________________________________
 
 @dp.callback_query_handler(text='fill_announcement')
 async def send_announcement(callback: types.CallbackQuery):
-    await callback.message.answer('text')
+    await callback.message.delete()
     await callback.answer()
-    await callback.message.answer("Отправьте фото утерянной вещи или афишу мероприятия.")
+    await callback.message.answer("Отправьте афишу мероприятия.")
     await fill_Ad_Event.photo.set()
 
 @dp.message_handler(content_types=['photo'], state=fill_Ad_Event.photo)
@@ -54,4 +58,11 @@ async def state1(message: types.Message, state: FSMContext):
                                                                   f'\n\n'
                                                                   f'{description_event}', parse_mode="Markdown")
         chat_id.remove(id)
+    await commands.add_Fill_Ad_Event(photo=photo,
+                                     date_event=date_event,
+                                     time_event=time_event,
+                                     description_event=description_event)
     await state.finish()
+
+
+
