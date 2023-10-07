@@ -9,6 +9,7 @@ class User(TimedBaseModel):
     first_name = Column(String(200))
     last_name = Column(String(200))
     username = Column(String(50))
+    realname = Column(String(50))
     status = Column(String(30))
     query: sql.select
     

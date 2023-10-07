@@ -7,9 +7,9 @@ from sqlalchemy import Column, BigInteger, String, sql, BLOB
 
 
 
-async def add_user(user_id: int, first_name: str, last_name: str, username: str, status: str):
+async def add_user(user_id: int, first_name: str, last_name: str, username: str, realname: str, status: str):
     try:
-        user = User(user_id=user_id, first_name=first_name, last_name=last_name, username=username, status=status)
+        user = User(user_id=user_id, first_name=first_name, last_name=last_name, username=username, realname=realname, status=status)
         await user.create()
     except UniqueViolationError:
         print('Пользователь не добавлен')
@@ -30,11 +30,27 @@ async def select_user(user_id):
 async def update_status(user_id, status):
      user = await select_user(user_id)
      await user.update(status=status).apply()
-async def add_Fill_Ad_Event(photo, date_event: str, time_event: str, description_event: str):
+
+
+
+
+
+
+async def add_Fill_Ad_Event(photo, date_event: str,name: str, time_event: str, description_event: str, person: str, chat_id_list: list):
     try:
-        fill_Ad_Event = Fill_Ad_Event(photo=photo, date_event=date_event, time_event=time_event, description_event=description_event, )
+        fill_Ad_Event = Fill_Ad_Event(photo=photo, name=name, date_event=date_event, time_event=time_event, description_event=description_event, person=person, chat_id_list=chat_id_list )
         await fill_Ad_Event.create()
     except UniqueViolationError:
         print('Пользователь не добавлен')
+
+
+async def select_all_event():
+    events = await Fill_Ad_Event.query.gino.all()
+    return events
+
+async def select_event_by_date(date_event):
+    events = Fill_Ad_Event.query.where(Fill_Ad_Event.date_event == date_event).gino
+    return events
+
 #_______________________________________________________________________________
 

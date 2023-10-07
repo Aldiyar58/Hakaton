@@ -3,6 +3,7 @@ from aiogram.dispatcher.filters.state import StatesGroup, State
 
 class fill_Ad_Event(StatesGroup):
     photo = State()
+    name = State()
     date_event = State()
     time_event = State()
     description_event = State()
