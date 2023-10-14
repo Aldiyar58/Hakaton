@@ -21,7 +21,7 @@ async def command_register(message: types.Message):
         elif user.status == 'bamed':
             await message.answer('Ты забанен')
     except Exception:
-        await message.answer("Введите свой ИИН или Школную почту")
+        await message.answer("Введите свой ИИН или Школьную почту")
         await loginInSUH.loginIINorEmail.set()
 
 @dp.message_handler(state=loginInSUH.loginIINorEmail)
@@ -93,6 +93,7 @@ async def state2(message: types.Message, state: FSMContext):
     else:
         session.close()
         await message.answer(json.loads(response_login.text)['message'])
+        await message.answer('Введите свой ИИН или Школьную почту')
         await loginInSUH.loginIINorEmail.set()
 
 @dp.message_handler(text='/ban')

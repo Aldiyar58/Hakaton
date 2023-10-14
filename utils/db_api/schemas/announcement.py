@@ -9,13 +9,10 @@ class Fill_Ad_Event(TimedBaseModel):
     date_event = Column(String(200))
     time_event = Column(String(50))
     description_event = Column(String(3000))
-<<<<<<< HEAD
     person = Column(String(100))
     chat_id_list = Column(ARRAY(String(100)))
+    query: sql.select
 
-    query: sql.select
-=======
-    query: sql.select
 
 
 class Fill_Ad_Lost(TimedBaseModel):
@@ -40,4 +37,4 @@ class Fill_Ad_news(TimedBaseModel):
     query: sql.select
 
 
->>>>>>> c031ac1018fd0aeac1a13f6d5cec28d533dceb25
+
